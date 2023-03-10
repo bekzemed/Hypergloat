@@ -94,13 +94,13 @@ export class TeamsController {
   *
   *
   update teams
-  for an authorized admin and editor only
+  for an authorized admin only
   *
   *
   */
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN, Role.EDITOR)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Update teams.' })
   @Patch(':id')
   @ApiParam({
@@ -123,13 +123,13 @@ export class TeamsController {
   *
   *
   delete teams
-  for an authorized user
+  for admin only
   *
   *
   */
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN, Role.EDITOR)
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Delete team.' })
   @Delete(':id')
   @ApiParam({

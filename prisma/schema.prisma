@@ -79,6 +79,7 @@ model Event {
   description String
   image       String
   location    String
+  date        DateTime @db.Date
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
