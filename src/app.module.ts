@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ArticlesModule } from './articles/articles.module';
 import { PortifoliosModule } from './portifolios/portifolios.module';
+import { ContactsModule } from './contacts/contacts.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PortifoliosModule } from './portifolios/portifolios.module';
     UsersModule,
     ArticlesModule,
     PortifoliosModule,
+    ContactsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

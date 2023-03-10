@@ -48,7 +48,7 @@ export class UsersController {
   @ApiOkResponse({ type: UserEntity })
   @ApiCreatedResponse({ description: 'Create user.' })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
 
