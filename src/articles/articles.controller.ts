@@ -33,6 +33,9 @@ import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { ArticleEntity } from './entities/article.entity';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Multer } from 'multer';
+import { Express } from 'express';
 
 @ApiTags('Articles')
 @Controller('articles')
