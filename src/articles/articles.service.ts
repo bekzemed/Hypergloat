@@ -20,7 +20,11 @@ export class ArticlesService {
     userId: number,
   ): Promise<Article> {
     return await this.prisma.article.create({
-      data: { ...createArticleDto, userId },
+      data: {
+        ...createArticleDto,
+        coverImage: `${process.env.BASE_URL}${createArticleDto.coverImage.path}`,
+        userId,
+      },
     });
   }
 
@@ -60,10 +64,21 @@ export class ArticlesService {
     id: number,
     updateArticleDto: UpdateArticleDto,
   ): Promise<Article> {
-    return await this.prisma.article.update({
+    const article = await this.prisma.article.findUnique({
       where: { id },
-      data: updateArticleDto,
     });
+    return updateArticleDto.coverImage
+      ? await this.prisma.article.update({
+          where: { id },
+          data: {
+            ...updateArticleDto,
+            coverImage: `${process.env.BASE_URL}${updateArticleDto.coverImage.path}`,
+          },
+        })
+      : await this.prisma.article.update({
+          where: { id },
+          data: { ...updateArticleDto, coverImage: article.coverImage },
+        });
   }
 
   /*

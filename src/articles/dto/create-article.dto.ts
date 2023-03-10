@@ -10,6 +10,6 @@ export class CreateArticleDto {
   @ApiProperty()
   content: string;
 
-  @ApiProperty()
-  coverImage: string;
+  @ApiProperty({ type: String, format: 'binary' })
+  coverImage: Express.Multer.File;
 }

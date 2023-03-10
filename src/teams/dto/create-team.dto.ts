@@ -7,8 +7,8 @@ export class CreateTeamDto {
   @ApiProperty()
   position: string;
 
-  @ApiProperty()
-  image: string;
+  @ApiProperty({ type: String, format: 'binary' })
+  image: Express.Multer.File;
 
   @ApiProperty()
   bio: string;

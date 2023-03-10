@@ -16,6 +16,6 @@ export class CreatePortifolioDto {
   @ApiProperty({ type: [String] })
   testimonies: string[];
 
-  @ApiProperty()
-  coverImage: string;
+  @ApiProperty({ type: String, format: 'binary' })
+  coverImage: Express.Multer.File;
 }

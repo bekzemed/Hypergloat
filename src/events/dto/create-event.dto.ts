@@ -7,8 +7,8 @@ export class CreateEventDto {
   @ApiProperty()
   description: string;
 
-  @ApiProperty()
-  image: string;
+  @ApiProperty({ type: String, format: 'binary' })
+  image: Express.Multer.File;
 
   @ApiProperty()
   location: string;

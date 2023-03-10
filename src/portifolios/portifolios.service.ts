@@ -20,7 +20,11 @@ export class PortifoliosService {
     userId: number,
   ): Promise<Portifolio> {
     return await this.prisma.portifolio.create({
-      data: { ...createPortifolioDto, userId },
+      data: {
+        ...createPortifolioDto,
+        coverImage: `${process.env.BASE_URL}${createPortifolioDto.coverImage.path}`,
+        userId,
+      },
     });
   }
 
@@ -60,10 +64,21 @@ export class PortifoliosService {
     id: number,
     updatePortifolioDto: UpdatePortifolioDto,
   ): Promise<Portifolio> {
-    return await this.prisma.portifolio.update({
+    const portifolio = await this.prisma.portifolio.findUnique({
       where: { id },
-      data: updatePortifolioDto,
     });
+    return updatePortifolioDto.coverImage
+      ? await this.prisma.portifolio.update({
+          where: { id },
+          data: {
+            ...updatePortifolioDto,
+            coverImage: `${process.env.BASE_URL}${updatePortifolioDto.coverImage.path}`,
+          },
+        })
+      : await this.prisma.portifolio.update({
+          where: { id },
+          data: { ...updatePortifolioDto, coverImage: portifolio.coverImage },
+        });
   }
 
   /*

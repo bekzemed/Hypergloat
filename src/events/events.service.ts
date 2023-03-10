@@ -15,9 +15,13 @@ export class EventsService {
   *
   *
   */
-  async create(createEventDto: CreateEventDto): Promise<Event> {
+  async create(createEventDto: CreateEventDto) {
     return await this.prisma.event.create({
-      data: { ...createEventDto, date: new Date(createEventDto.date) },
+      data: {
+        ...createEventDto,
+        image: `${process.env.BASE_URL}${createEventDto.image.path}`,
+        date: new Date(createEventDto.date),
+      },
     });
   }
 
@@ -53,10 +57,19 @@ export class EventsService {
   *
   */
   async update(id: number, updateEventDto: UpdateEventDto): Promise<Event> {
-    return await this.prisma.event.update({
-      where: { id },
-      data: updateEventDto,
-    });
+    const userImage = await this.prisma.event.findUnique({ where: { id } });
+    return updateEventDto.image
+      ? await this.prisma.event.update({
+          where: { id },
+          data: {
+            ...updateEventDto,
+            image: `${process.env.BASE_URL}${updateEventDto.image.path}`,
+          },
+        })
+      : await this.prisma.event.update({
+          where: { id },
+          data: { ...updateEventDto, image: userImage.image },
+        });
   }
 
   /*

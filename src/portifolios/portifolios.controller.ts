@@ -8,12 +8,15 @@ import {
   Delete,
   UseGuards,
   Request,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { PortifoliosService } from './portifolios.service';
 import { CreatePortifolioDto } from './dto/create-portifolio.dto';
 import { UpdatePortifolioDto } from './dto/update-portifolio.dto';
 import {
   ApiBearerAuth,
+  ApiConsumes,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiOkResponse,
@@ -27,6 +30,9 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { Portifolio, Role } from '@prisma/client';
 import { PortifolioEntity } from './entities/portifolio.entity';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @ApiTags('Portifolios')
 @Controller('portifolios')
@@ -45,6 +51,21 @@ export class PortifoliosController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
   @Post()
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_, file, callback) => {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const extension = extname(file.originalname);
+          const filename = `${uniqueSuffix}${extension}`;
+          callback(null, filename);
+        },
+      }),
+    }),
+  )
+  @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Create Portifolio.' })
   @ApiOkResponse({ type: PortifolioEntity })
   @ApiCreatedResponse({ description: 'Create portifolio.' })
@@ -52,8 +73,12 @@ export class PortifoliosController {
   create(
     @Body() createPortifolioDto: CreatePortifolioDto,
     @Request() req,
+    @UploadedFiles() files: Array<Express.Multer.File>,
   ): Promise<Portifolio> {
-    return this.portifoliosService.create(createPortifolioDto, req.user.id);
+    return this.portifoliosService.create(
+      { ...createPortifolioDto, coverImage: files[0] },
+      req.user.id,
+    );
   }
 
   /*
@@ -105,6 +130,21 @@ export class PortifoliosController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN, Role.EDITOR)
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_, file, callback) => {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const extension = extname(file.originalname);
+          const filename = `${uniqueSuffix}${extension}`;
+          callback(null, filename);
+        },
+      }),
+    }),
+  )
+  @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Update portifolio.' })
   @Patch(':id')
   @ApiParam({
@@ -119,8 +159,12 @@ export class PortifoliosController {
   update(
     @Param('id') id: string,
     @Body() updatePortifolioDto: UpdatePortifolioDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
   ): Promise<Portifolio> {
-    return this.portifoliosService.update(+id, updatePortifolioDto);
+    return this.portifoliosService.update(+id, {
+      ...updatePortifolioDto,
+      coverImage: files[0],
+    });
   }
 
   /*
