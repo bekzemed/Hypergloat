@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { ArticlesModule } from './articles/articles.module';
 import { PortifoliosModule } from './portifolios/portifolios.module';
 import { ContactsModule } from './contacts/contacts.module';
+import { TeamsModule } from './teams/teams.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ContactsModule } from './contacts/contacts.module';
     ArticlesModule,
     PortifoliosModule,
     ContactsModule,
+    TeamsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
