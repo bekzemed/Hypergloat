@@ -8,6 +8,7 @@ import { ArticlesModule } from './articles/articles.module';
 import { PortifoliosModule } from './portifolios/portifolios.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { TeamsModule } from './teams/teams.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TeamsModule } from './teams/teams.module';
     PortifoliosModule,
     ContactsModule,
     TeamsModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
