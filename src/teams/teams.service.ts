@@ -17,7 +17,10 @@ export class TeamsService {
   */
   async create(createTeamDto: CreateTeamDto): Promise<TeamMember> {
     return await this.prisma.teamMember.create({
-      data: createTeamDto,
+      data: {
+        ...createTeamDto,
+        image: `${process.env.BASE_URL}${createTeamDto.image.path}`,
+      },
     });
   }
 
@@ -53,10 +56,22 @@ export class TeamsService {
   *
   */
   async update(id: number, updateTeamDto: UpdateTeamDto): Promise<TeamMember> {
-    return await this.prisma.teamMember.update({
+    const teamMemberImage = await this.prisma.teamMember.findUnique({
       where: { id },
-      data: updateTeamDto,
     });
+
+    return updateTeamDto.image
+      ? await this.prisma.teamMember.update({
+          where: { id },
+          data: {
+            ...updateTeamDto,
+            image: `${process.env.BASE_URL}${updateTeamDto.image.path}`,
+          },
+        })
+      : await this.prisma.teamMember.update({
+          where: { id },
+          data: { ...updateTeamDto, image: teamMemberImage.image },
+        });
   }
 
   /*
