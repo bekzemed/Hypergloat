@@ -9,6 +9,7 @@ import { PortifoliosModule } from './portifolios/portifolios.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { TeamsModule } from './teams/teams.module';
 import { EventsModule } from './events/events.module';
+import { CareersModule } from './careers/careers.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EventsModule } from './events/events.module';
     ContactsModule,
     TeamsModule,
     EventsModule,
+    CareersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
