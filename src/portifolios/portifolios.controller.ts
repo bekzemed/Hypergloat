@@ -49,7 +49,10 @@ export class PortifoliosController {
   @ApiOkResponse({ type: PortifolioEntity })
   @ApiCreatedResponse({ description: 'Create portifolio.' })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
-  create(@Body() createPortifolioDto: CreatePortifolioDto, @Request() req) {
+  create(
+    @Body() createPortifolioDto: CreatePortifolioDto,
+    @Request() req,
+  ): Promise<Portifolio> {
     return this.portifoliosService.create(createPortifolioDto, req.user.id);
   }
 

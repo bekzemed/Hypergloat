@@ -15,7 +15,10 @@ export class ArticlesService {
   *
   *
   */
-  async create(createArticleDto: CreateArticleDto, userId: number) {
+  async create(
+    createArticleDto: CreateArticleDto,
+    userId: number,
+  ): Promise<Article> {
     return await this.prisma.article.create({
       data: { ...createArticleDto, userId },
     });

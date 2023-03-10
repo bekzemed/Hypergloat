@@ -49,7 +49,10 @@ export class ArticlesController {
   @ApiOkResponse({ type: ArticleEntity })
   @ApiCreatedResponse({ description: 'Create article.' })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
-  create(@Body() createArticleDto: CreateArticleDto, @Request() req) {
+  create(
+    @Body() createArticleDto: CreateArticleDto,
+    @Request() req,
+  ): Promise<Article> {
     return this.articlesService.create(createArticleDto, req.user.id);
   }
 

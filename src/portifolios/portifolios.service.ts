@@ -15,7 +15,10 @@ export class PortifoliosService {
   *
   *
   */
-  async create(createPortifolioDto: CreatePortifolioDto, userId: number) {
+  async create(
+    createPortifolioDto: CreatePortifolioDto,
+    userId: number,
+  ): Promise<Portifolio> {
     return await this.prisma.portifolio.create({
       data: { ...createPortifolioDto, userId },
     });
