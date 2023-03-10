@@ -39,6 +39,7 @@ CREATE TABLE "Portifolio" (
     "coverImage" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Portifolio_pkey" PRIMARY KEY ("id")
 );
@@ -101,5 +102,11 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "Article_title_key" ON "Article"("title");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Portifolio_userId_key" ON "Portifolio"("userId");
+
 -- AddForeignKey
 ALTER TABLE "Article" ADD CONSTRAINT "Article_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Portifolio" ADD CONSTRAINT "Portifolio_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
