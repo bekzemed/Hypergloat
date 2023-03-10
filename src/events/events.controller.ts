@@ -32,6 +32,9 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
 import { EventsService } from './events.service';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Multer } from 'multer';
+import { Express } from 'express';
 
 @ApiTags('Events')
 @Controller('events')

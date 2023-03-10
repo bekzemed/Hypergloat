@@ -33,6 +33,9 @@ import { PortifolioEntity } from './entities/portifolio.entity';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Multer } from 'multer';
+import { Express } from 'express';
 
 @ApiTags('Portifolios')
 @Controller('portifolios')

@@ -32,6 +32,9 @@ import { Role, TeamMember } from '@prisma/client';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Multer } from 'multer';
+import { Express } from 'express';
 
 @ApiTags('Teams')
 @Controller('teams')
